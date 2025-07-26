@@ -1,0 +1,24 @@
+{
+  "name": "navi-animation-updater",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "UNLICENSE",
+  "scripts": {
+    "start": "parcel index.html --dist-dir _dev",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run licenses && parcel build --public-url ./ index.html",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "licenses": "license-ripper -o _licenses.json --include-homepage"
+  },
+  "devDependencies": {
+    "license-ripper": "^0.7.0",
+    "parcel": "^2.10.3",
+    "rimraf": "^5.0.5"
+  },
+  "dependencies": {
+    "bin-pack": "^1.0.2",
+    "md5": "^2.3.0",
+    "quote-unquote": "^1.0.0"
+  }
+}
