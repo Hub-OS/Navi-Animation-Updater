@@ -61,6 +61,8 @@ const MIGRATIONS = {
       const bins = createBinsForFrames(originalAnimation.frames);
       let i = 1;
 
+      bins[0].outFrame.points = [];
+
       for (const frame of hiltAnimation.frames) {
         let bin = bins[i++];
         const baseFrame = bin.overlayed[0].frame;
@@ -98,6 +100,8 @@ const MIGRATIONS = {
     if (handAnimation) {
       const bins = createBinsForFrames(originalAnimation.frames);
       let i = 1;
+
+      bins[0].outFrame.points = [];
 
       for (const frame of handAnimation.frames) {
         let bin = bins[i++];
