@@ -54,7 +54,7 @@ const MIGRATIONS = {
     originalAnimation: BoomSheetsAnimation
   ) {
     const hiltAnimation = inputSheet.animations!.find(
-      (anim) => anim.state == "HILT"
+      (anim) => anim.state.toUpperCase() == "HILT"
     );
 
     if (hiltAnimation) {
@@ -64,7 +64,9 @@ const MIGRATIONS = {
       for (const frame of hiltAnimation.frames) {
         let bin = bins[i++];
         const baseFrame = bin.overlayed[0].frame;
-        const hiltPoint = baseFrame.points.find((p) => p.label == "HILT") ?? {
+        const hiltPoint = baseFrame.points.find(
+          (p) => p.label.toUpperCase() == "HILT"
+        ) ?? {
           x: 0,
           y: 0,
         };
@@ -73,8 +75,9 @@ const MIGRATIONS = {
         const offsety = hiltPoint.y - baseFrame.originy;
         bin.overlayed.push({ frame, offsetx, offsety });
 
-        const endPoint = frame.points.find((p) => p.label == "ENDPOINT");
-        console.log(offsetx, frame.originx, endPoint);
+        const endPoint = frame.points.find(
+          (p) => p.label.toUpperCase() == "ENDPOINT"
+        );
 
         bin.outFrame.points = [
           {
@@ -89,7 +92,7 @@ const MIGRATIONS = {
     }
 
     const handAnimation = inputSheet.animations!.find(
-      (anim) => anim.state == "HAND"
+      (anim) => anim.state.toUpperCase() == "HAND"
     );
 
     if (handAnimation) {
@@ -99,7 +102,9 @@ const MIGRATIONS = {
       for (const frame of handAnimation.frames) {
         let bin = bins[i++];
         const baseFrame = bin.overlayed[0].frame;
-        const hiltPoint = baseFrame.points.find((p) => p.label == "HILT") ?? {
+        const hiltPoint = baseFrame.points.find(
+          (p) => p.label.toUpperCase() == "HILT"
+        ) ?? {
           x: 0,
           y: 0,
         };
@@ -129,7 +134,7 @@ export default function updateSheet(
 
   // create bins for the animation
   for (const animation of inputSheet.animations) {
-    const migrate = MIGRATIONS[animation.state];
+    const migrate = MIGRATIONS[animation.state.toUpperCase()];
 
     if (migrate) {
       migrate(inputSheet, binMap, animation);
@@ -164,10 +169,6 @@ export default function updateSheet(
     for (const point of bin.outFrame.points) {
       point.x -= originShiftX;
       point.y -= originShiftY;
-    }
-
-    if (originShiftX != 0 || originShiftY != 0) {
-      console.log(originShiftX, originShiftY);
     }
 
     // resolve size
